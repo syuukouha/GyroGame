@@ -11,7 +11,6 @@ public class Test : MonoBehaviour {
     public float rotateAcc;
     public float maxAngle;
 
-
     public float acc;
     public float friction;
     public float maxSpeed;
