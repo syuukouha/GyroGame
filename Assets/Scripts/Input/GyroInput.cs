@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GyroInput : MonoBehaviour
+public class GyroInput : UserInput
 {
     public Text text;
     Gyroscope gyroscope;
@@ -20,9 +20,11 @@ public class GyroInput : MonoBehaviour
     [SerializeField]
     float updateInterval = 0.1f;
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         gyroinfo = SystemInfo.supportsGyroscope;
+        if (gyroinfo == false)
+            this.enabled = false;
         gyroscope = Input.gyro;
         //设置设备陀螺仪的开启/关闭状态，使用陀螺仪功能必须设置为 true    
         Input.gyro.enabled = true;
@@ -42,11 +44,5 @@ public class GyroInput : MonoBehaviour
         //获取移除重力加速度后设备的加速度    
         acceleration = Input.gyro.userAcceleration;
         text.text = string.Format("重力加速度向量:{0}\n旋转速度:{1}\n更加精确的旋转:{2}\n移除重力加速度后设备的加速度;{3}", deviceGravity, rotationVelocity, rotationVelocity2, acceleration);
-        GyroModifyPlayer();
-    }
-
-    void GyroModifyPlayer()
-    {
-        transform.position += rotationVelocity2;
     }
 }
