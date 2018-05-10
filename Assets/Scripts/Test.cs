@@ -22,39 +22,39 @@ public class Test : MonoBehaviour {
         //this.transform.rotation = Quaternion.AngleAxis(360f * a,new Vector3(1,1,0));
         m_preVelocity = GetComponent<Rigidbody>().velocity;
 
-/*
+#if UNITY_STANDALONE_WIN 
 
         if (Input.GetKey(KeyCode.W))
         {
-            speed -= new Vector3(0, 0, acc.z * Time.deltaTime);
+            speed -= new Vector3(0, 0, acc * Time.deltaTime);
 
             father.localEulerAngles -= new Vector3(rotateAcc * Time.deltaTime,0,0);
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            speed += new Vector3(0, 0, acc.z * Time.deltaTime);
+            speed += new Vector3(0, 0, acc * Time.deltaTime);
 
             father.localEulerAngles += new Vector3(rotateAcc * Time.deltaTime, 0, 0);
         }
         else {
-            speed -= new Vector3(0, 0, Mathf.Sign(speed.z) * acc.z * Time.deltaTime);
+            speed -= new Vector3(0, 0, Mathf.Sign(speed.z) * acc * Time.deltaTime);
 
             father.localEulerAngles -= new Vector3((father.localEulerAngles.x > 180f ? -1f : 1f) * rotateAcc * Time.deltaTime,0,0);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            speed += new Vector3(acc.x * Time.deltaTime,0,0);
+            speed += new Vector3(acc * Time.deltaTime,0,0);
 
             father.localEulerAngles -= new Vector3(0, 0, rotateAcc * Time.deltaTime);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            speed -= new Vector3(acc.x * Time.deltaTime,0,0);
+            speed -= new Vector3(acc * Time.deltaTime,0,0);
 
             father.localEulerAngles += new Vector3(0, 0, rotateAcc * Time.deltaTime);
         }
         else {
-            speed -= new Vector3(Mathf.Sign(speed.x) * acc.x * Time.deltaTime,0,0);
+            speed -= new Vector3(Mathf.Sign(speed.x) * acc * Time.deltaTime,0,0);
 
             father.localEulerAngles -= new Vector3(0, 0, (father.localEulerAngles.z>180f?-1f:1f) * rotateAcc * Time.deltaTime);
         }
@@ -75,7 +75,7 @@ public class Test : MonoBehaviour {
         {
             father.localEulerAngles = new Vector3(maxAngle, father.localEulerAngles.y, father.localEulerAngles.z);
         }
-*/
+#else
 
         speed += new Vector3(-Input.gyro.gravity.x / 0.5f * acc * Time.deltaTime, 0, -Input.gyro.gravity.y / 0.5f * acc * Time.deltaTime);
         
@@ -85,6 +85,7 @@ public class Test : MonoBehaviour {
 
         father.localEulerAngles = new Vector3(Mathf.LerpAngle(father.localEulerAngles.x,Input.gyro.gravity.y / 0.5f * maxAngle,30f * Time.deltaTime)
         , 0, Mathf.LerpAngle(father.localEulerAngles.z, Input.gyro.gravity.x / 0.5f * maxAngle, 30f * Time.deltaTime));
+#endif
 
         GetComponent<Rigidbody>().velocity = new Vector3(speed.x, GetComponent<Rigidbody>().velocity.y,speed.z);
 
@@ -97,7 +98,7 @@ public class Test : MonoBehaviour {
     {
         if (collision.gameObject.name == "wall")
         {
-
+            print("test"); 
             //print(collision.relativeVelocity);
             //print(collision.contacts[0].point + "  " + collision.contacts[0].normal);    
 
@@ -108,7 +109,6 @@ public class Test : MonoBehaviour {
             Debug.DrawRay(transform.position, collision.contacts[0].normal * 10f,Color.red , 0.02f);
             Debug.DrawRay(transform.position, Vector3.Reflect(transform.TransformDirection(speed.normalized), collision.contacts[0].normal) * 10f, Color.blue, 0.02f);
 
-            print(Vector3.Reflect(transform.TransformDirection(speed.normalized), collision.contacts[0].normal) * maxSpeed);
 
             speed = Vector3.Reflect(transform.TransformDirection(speed.normalized), collision.contacts[0].normal) * Mathf.Clamp(speed.magnitude,0f, maxSpeed) *2f;
 /*
