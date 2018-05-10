@@ -22,7 +22,7 @@ public class Test : MonoBehaviour {
         //this.transform.rotation = Quaternion.AngleAxis(360f * a,new Vector3(1,1,0));
         m_preVelocity = GetComponent<Rigidbody>().velocity;
 
-#if UNITY_STANDALONE_WIN 
+#if UNITY_EDITOR
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -59,11 +59,23 @@ public class Test : MonoBehaviour {
             father.localEulerAngles -= new Vector3(0, 0, (father.localEulerAngles.z>180f?-1f:1f) * rotateAcc * Time.deltaTime);
         }
 
+        
+#else
+
+        speed += new Vector3(-Input.gyro.gravity.x / 0.2f * acc * Time.deltaTime, 0, -Input.gyro.gravity.y / 0.2f * acc * Time.deltaTime);
+        
+        //摩擦力
+        speed -= new Vector3(Mathf.Sign(speed.x) * friction * Time.deltaTime, 0, Mathf.Sign(speed.z) * friction * Time.deltaTime);
+        
+
+        father.localEulerAngles = new Vector3(-Mathf.LerpAngle(father.localEulerAngles.x,Input.gyro.gravity.y / 0.2f * maxAngle,20f* Time.deltaTime)
+        , 0, Mathf.LerpAngle(father.localEulerAngles.z, Input.gyro.gravity.x / 0.2f * maxAngle, 20f * Time.deltaTime));
+#endif
         if (Mathf.DeltaAngle(father.localEulerAngles.z, 0f) > maxAngle)
         {
             father.localEulerAngles = new Vector3(father.localEulerAngles.x, father.localEulerAngles.y, -maxAngle);
         }
-        if (Mathf.DeltaAngle(0,father.localEulerAngles.z) > maxAngle)
+        if (Mathf.DeltaAngle(0, father.localEulerAngles.z) > maxAngle)
         {
             father.localEulerAngles = new Vector3(father.localEulerAngles.x, father.localEulerAngles.y, maxAngle);
         }
@@ -75,17 +87,6 @@ public class Test : MonoBehaviour {
         {
             father.localEulerAngles = new Vector3(maxAngle, father.localEulerAngles.y, father.localEulerAngles.z);
         }
-#else
-
-        speed += new Vector3(-Input.gyro.gravity.x / 0.5f * acc * Time.deltaTime, 0, -Input.gyro.gravity.y / 0.5f * acc * Time.deltaTime);
-        
-        //摩擦力
-        speed -= new Vector3(Mathf.Sign(speed.x) * friction * Time.deltaTime, 0, Mathf.Sign(speed.z) * friction * Time.deltaTime);
-        
-
-        father.localEulerAngles = new Vector3(Mathf.LerpAngle(father.localEulerAngles.x,Input.gyro.gravity.y / 0.5f * maxAngle,30f * Time.deltaTime)
-        , 0, Mathf.LerpAngle(father.localEulerAngles.z, Input.gyro.gravity.x / 0.5f * maxAngle, 30f * Time.deltaTime));
-#endif
 
         GetComponent<Rigidbody>().velocity = new Vector3(speed.x, GetComponent<Rigidbody>().velocity.y,speed.z);
 
