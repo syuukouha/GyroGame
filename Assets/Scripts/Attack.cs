@@ -41,7 +41,7 @@ public class Attack : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(gizmosCenter, gizmosRadius);
+        Gizmos.DrawWireSphere(gizmosCenter, gizmosRadius);
     }
 
 }
