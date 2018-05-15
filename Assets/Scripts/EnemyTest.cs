@@ -37,6 +37,8 @@ public class EnemyTest : MonoBehaviour
             iTween.PointOnPath(path, newPercentPosition + 0.10f)
         );
 
+        
+
         distortion = realOnePercent / pathOnePercent;
 
         realPercentToMove = (Speed * Time.deltaTime) / pathLength;
@@ -48,4 +50,9 @@ public class EnemyTest : MonoBehaviour
             transform.forward = iTween.PointOnPath(path, newPercentPosition).normalized;
         }
     }
+
+
+
+ 
+
 }
