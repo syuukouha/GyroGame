@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 33682007899907778}
   - component: {fileID: 135115642256015608}
   - component: {fileID: 23494569355091698}
+  - component: {fileID: 114371933493914794}
   - component: {fileID: 114276973940125908}
   m_Layer: 0
   m_Name: Enemy
@@ -182,6 +183,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PathName: EnemyPath
   Speed: 10
+--- !u!114 &114371933493914794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797742324537726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cd56f88f9e04446b2a50aede9dd90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135115642256015608
 SphereCollider:
   m_ObjectHideFlags: 1

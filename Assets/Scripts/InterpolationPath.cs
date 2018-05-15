@@ -5,6 +5,8 @@ using Sirenix.OdinInspector;
 
 public class InterpolationPath : MonoBehaviour
 {
+    [BoxGroup("是否启用路径移动", centerLabel: true)]
+    public bool IsPathMove = true;
     [BoxGroup("路径名称", centerLabel: true)]
     public string PathName;
     [BoxGroup("路径移动速度", centerLabel: true)]
@@ -38,23 +40,30 @@ public class InterpolationPath : MonoBehaviour
     /// </summary>
     void PathMove()
     {
-        //路径
-        Vector3[] path = iTweenPath.GetPath(PathName);
-        lastPoint = transform.position;
-        percentLast = percentNow;
-        percentNow += 0.001f;
-        float distance = Vector3.Distance(iTween.PointOnPath(path, percentNow), iTween.PointOnPath(path, percentLast));
-        float percentAmend = 0.001f * Speed * Time.deltaTime / distance;
-        percentNow = percentLast + percentAmend;
-        //移动到当前百分比的路径位置
-        transform.position = iTween.PointOnPath(path, percentNow);
-        //面朝下一帧的路径
-        Vector3 lookPos = iTween.PointOnPath(path, percentNow += 0.001f) - transform.position;
-        lookPos.y = 0;
-        Quaternion rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 30.0f);
-        //如果已经走完，让当前百分比归零
-        if (percentNow > 1f)
+        if (IsPathMove)
+        {
+            //路径
+            Vector3[] path = iTweenPath.GetPath(PathName);
+            lastPoint = transform.position;
+            percentLast = percentNow;
+            percentNow += 0.001f;
+            float distance = Vector3.Distance(iTween.PointOnPath(path, percentNow), iTween.PointOnPath(path, percentLast));
+            float percentAmend = 0.001f * Speed * Time.deltaTime / distance;
+            percentNow = percentLast + percentAmend;
+            //移动到当前百分比的路径位置
+            transform.position = iTween.PointOnPath(path, percentNow);
+            //面朝下一帧的路径
+            Vector3 lookPos = iTween.PointOnPath(path, percentNow += 0.001f) - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 30.0f);
+            //如果已经走完，让当前百分比归零
+            if (percentNow > 1f)
+            {
+                percentNow = 0;
+            }
+        }
+        else
         {
             percentNow = 0;
         }

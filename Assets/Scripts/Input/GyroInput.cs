@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GyroInput : UserInput
+public class GyroInput : MonoBehaviour
 {
     public Text text;
     Gyroscope gyroscope;

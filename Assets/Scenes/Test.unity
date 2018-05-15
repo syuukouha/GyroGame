@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 586586104}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1093,7 +1093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229da735ab142cb40b39af1f3e5299d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: 0, y: 0, z: 0}
   text: {fileID: 484267096}
   deviceGravity: {x: 0, y: 0, z: 0}
   rotationVelocity: {x: 0, y: 0, z: 0}
@@ -1382,7 +1381,7 @@ MonoBehaviour:
   Rate: 3
   EnemeyPrefab: {fileID: 1797742324537726, guid: 13e527b5234a2254582fa46e91520ec1,
     type: 2}
-  TimesofEachWave: 30
+  TimesOfEachWave: 30
   Count: 0
 --- !u!4 &1233046620
 Transform:
