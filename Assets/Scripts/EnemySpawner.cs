@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    float timer = 0;
-    float timer2 = 0;
+    float waveTimer = 0;
+    float rateTimer = 0;
     //产生敌人的速率
-    public float rate;
+    public float Rate;
     //敌人的预制体
-    public GameObject enemeyPrefab;
+    public GameObject EnemeyPrefab;
     //每一波的时间
-    public float timesofEachWave = 30;
+    public float TimesofEachWave = 30;
     //每一波的已经产生的数量
-    public int count;
+    public int Count;
 
     void Update()
     {
 
-        timer2 += Time.deltaTime;
-        if (timer2 < timesofEachWave && count != 10)
+        waveTimer += Time.deltaTime;
+        if (waveTimer < TimesofEachWave && Count != 10)
         {
-            timer += Time.deltaTime;
-
-            if (timer > rate)
+            rateTimer += Time.deltaTime;
+            if (rateTimer > Rate)
             {
-                Instantiate(enemeyPrefab, Vector3.zero, Quaternion.identity);
-
-                count++;
-
-                timer -= rate;
+                Instantiate(EnemeyPrefab, Vector3.zero, Quaternion.identity);
+                Count++;
+                rateTimer -= Rate;
             }
         }
     }
